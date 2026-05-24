@@ -1,0 +1,30 @@
+# --- BTT TFT config.ini keys for Klipper + Touch Mode ---------------------
+#
+# These are the ONLY keys you need to change from the stock BTT config.ini.
+# You can either edit your full config.ini, or (since config.ini may be
+# partial) drop a small config.ini containing just these lines on the SD
+# card root. Boot the TFT once to apply -- it renames config.ini -> config.ini.CUR.
+#
+# After editing: power-cycle the TFT (not just Klipper) so it re-reads the
+# file and re-runs its M115 handshake.
+
+# Serial: P1 = main port. 6 = 115200 baud. MUST match [tftbridge] tft_baud.
+serial_port:P1:6
+
+# Klipper does not use line checksums.
+command_checksum:0
+
+# --- Required for HOST print progress -------------------------------------
+# onboard_sd MUST be enabled (1), otherwise the TFT ignores all SD/M27
+# status and never shows progress for host-started prints.
+onboard_sd:1
+
+# Poll M27 for prints not started from the TFT (i.e. from Mainsail/Fluidd).
+M27_always_active:1
+
+# M27 poll interval in seconds (1..100). 2 = responsive progress bar.
+M27_refresh_time:2
+
+# Progress source: 0 = file-position based (works with M27 byte X/Y).
+# Use 0 unless your slicer emits M73 R time info.
+prog_source:0

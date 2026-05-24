@@ -1,0 +1,25 @@
+# --- Add to your printer.cfg ---------------------------------------------
+# BTT TFT (Touch Mode) bridge.
+# Copy tftbridge.py to ~/klipper/klippy/extras/ first.
+
+[tftbridge]
+# Serial device of the USB-TTL adapter the TFT is wired to.
+# Find it with:  ls -l /dev/serial/by-id/
+tft_device: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+tft_baud: 115200
+
+# Optional tunables (defaults shown):
+# busy_interval: 2.0       # seconds between "echo:busy: processing" keepalives
+# machine_type: Ender-3    # string reported in the M115 reply
+
+# These are standard Mainsail/Fluidd objects and are required for full
+# functionality (print progress, pause/resume). They are usually already
+# present in your config (e.g. via mainsail.cfg) — listed here for clarity.
+[virtual_sdcard]
+[print_stats]
+[display_status]
+[pause_resume]
+[respond]
+
+# NOTE: with this bridge you can REMOVE any Marlin-compat shim macros such as
+# [gcode_macro M92] / [gcode_macro M503] — the bridge handles those locally.
