@@ -97,6 +97,18 @@ Then **power‑cycle the TFT** so it re‑reads `config.ini` and re‑runs its `
 
 ---
 
+## Keeping Klipper's git repo clean (avoid the `-dirty` flag)
+
+Copying `tftbridge.py` into `klippy/extras/` adds an **untracked file** to Klipper's git repo, so Moonraker reports the Klipper version as `…-dirty` and its update manager may refuse to auto-update Klipper. Tell git to ignore the module locally:
+
+```bash
+echo 'klippy/extras/tftbridge.py' >> ~/klipper/.git/info/exclude
+```
+
+Also keep any backup copies (`tftbridge.py.bak`, …) **outside** `klippy/extras/` — leftover files there dirty the repo the same way.
+
+---
+
 ## The part nobody documents: host print progress
 
 The TFT only polls `M27` once it *believes a print is active* — and `M27_always_active` does **not** make it poll while idle (despite the name; it means "also poll for prints not started from the TFT").
