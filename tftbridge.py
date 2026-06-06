@@ -329,8 +329,16 @@ class TftBridge:
                 pct = int(round(st[key] * 100.))
             except Exception:
                 pass
-        label = 'Feedrate' if cmd == 'M220' else 'Flow'
-        return 'echo:%s: %d%%\r\nok\r\n' % (label, pct)
+        if cmd == 'M220':
+            # Current BTT TFT firmware parses the feedrate via the "FR:"
+            # keyword, while older firmware looked for "Feedrate". ack_seen()
+            # scans the whole line and ack_value() reads the number right after
+            # the matched keyword, so emitting both keeps both firmwares happy.
+            body = 'Feedrate: %d%% FR:%d%%' % (pct, pct)
+        else:
+            # "Flow:" is recognised by all known firmware versions.
+            body = 'Flow: %d%%' % pct
+        return 'echo:%s\r\nok\r\n' % body
 
     def _print_info(self):
         now = self.reactor.monotonic()
